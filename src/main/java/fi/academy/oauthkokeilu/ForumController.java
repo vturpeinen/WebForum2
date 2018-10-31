@@ -1,23 +1,25 @@
 package fi.academy.oauthkokeilu;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
 //@RequestMapping("/messages")
-
+@CrossOrigin("*")
 public class ForumController {
-    private ForumDAO dao;
+    private ViestiDAO dao;
 
     @Autowired
-    public ForumController(ForumDAO dao) {
+    public ForumController(ViestiDAO dao) {
         this.dao = dao;
     }
 
     @GetMapping("/messages")
-    public List<Viestit> kaikkiViestit(
+    public List<Messages> kaikkiViestit(
             @RequestParam(name = "filtteri", required = false) String label) {
         if (label == null) {
             List viestit = dao.haeKaikkiViestit();
@@ -25,44 +27,23 @@ public class ForumController {
         }
         return dao.haeKaikkiViestit();
     }
-}
-  /*
 
-
-
-    @DeleteMapping("/{code}")
-    public ResponseEntity<?> jokuKyla(@PathVariable(name= "code")String code){
-        dao.jokKyla(code);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable(name = "id")Integer id){
+        dao.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-    @PostMapping("/Cityt")
-    public ResponseEntity<?>asetaKyla(@RequestBody Cityt kyla) {
-        dao.asetakyla(kyla);
-        return ResponseEntity.noContent().build();
+    @PostMapping("/messages")
+    public ResponseEntity<?>lisaa(@RequestBody Messages label) throws URISyntaxException {
+        dao.lisaa(label);
+        return ResponseEntity.created(new URI("/messages")).build();
     }
+//    @PostMapping("/messages")
+//    public ResponseEntity<?>lisaa(@RequestBody Messages messages) {
+//        dao.lisaa(messages);
+//        String url = "http://localhost:8080/messages/" + messages.getLabel();
+//        return ResponseEntity.created(URI.create(url)).build();
+//    }
+
 }
-}
-/*
-    @PostMapping
-    @RequestBody Cityt,
-    public List<Cityt> kaikkiMaat() {
-        List maat = dao.haeKaikkiMaat();
-        return maat;
-    }
-}
-*/
-    /*
-    // FILTTEROINTI ja hakuparametriinn LIKE%
-        public List<Maa> kaikkiMaat(@RequestParam(name="filtteri",required = false)String nimi) {
-        if (nimi = null){
-        List <Maa> maat = dao.haeKaikkiMaat();
-        return maat;
-    }
-    return  dao.haeKaikkiMaat(nimi);
-    @GetMapping
-    public List<City> kaupungit(){
-        List kylat = dao.haeKaupungit();
-        return kylat;
-    }
-}
-*/
+
