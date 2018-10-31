@@ -11,6 +11,8 @@ import java.util.List;
 @Service
 public class KayttajaDAO {
 
+    private ViestiDAO dao;
+
         private JdbcTemplate jdbc;
         private RowMapper<Users> mapperi = (ResultSet rs, int indeksi) -> {
             Users users = new Users(
@@ -43,5 +45,10 @@ public class KayttajaDAO {
             return jdbc.update("insert into users(name, email, username, password) " + "values(?, ?, ?, ?)",
                     new Object[] { users.getName(), users.getEmail(), users.getUsername(), users.getPassword() });
         }
+
+    public List<Users> haeKayttajaNimi() {
+        List<Users> username = jdbc.query("SELECT username FROM users WHERE id(SELECT userid FROM messages)", mapperi);
+        return username;
+    }
     }
 

@@ -18,7 +18,9 @@ public class ViestiDAO {
                 rs.getString("label"),
                 rs.getInt("id"),
                 rs.getDate("ttimestamp"),
-                rs.getString("ggroup"));
+                rs.getString("ggroup"),
+                rs.getInt("userid"));
+
 
         return messages;
     };
@@ -43,4 +45,5 @@ public class ViestiDAO {
         return jdbc.update("INSERT INTO messages(label, content, ttimestamp, ggroup) VALUES (?,?,?,?)",
                 new Object[] { messages.getLabel(), messages.getContent(), messages.getTtimestamp(), messages.getGgroup() });
     }
+
 }

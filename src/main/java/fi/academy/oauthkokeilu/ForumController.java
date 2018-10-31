@@ -28,6 +28,18 @@ public class ForumController {
         return dao.haeKaikkiViestit();
     }
 
+
+
+    @GetMapping("/{username}")
+    public List<Users> haeKayttajaNimi(
+            @RequestParam(name = "filtteri", required = false) String username) {
+        if (username == null) {
+            List usernameYksi = dak.haeKayttajaNimi();
+            return usernameYksi;
+        }
+        return dak.haeKayttajaNimi();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id")Integer id){
         dao.deleteById(id);

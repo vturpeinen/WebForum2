@@ -9,16 +9,26 @@ public class Messages {
         private Integer id;
         private Date ttimestamp;
         private String ggroup;
+        private int userid;
 
-        public Messages(String label, String content, Integer id, Date ttimestamp, String ggroup) {
+        public Messages(String label, String content, Integer id, Date ttimestamp, String ggroup, int userid) {
             this.label = label;
             this.content = content;
             this.id = id;
             this.ttimestamp = ttimestamp;
             this.ggroup = ggroup;
+            this.userid = userid;
         }
 
     public Messages() {
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public String getGgroup() {
