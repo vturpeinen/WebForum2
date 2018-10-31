@@ -34,12 +34,12 @@ public class KayttajaDAO {
             List<Users> users = jdbc.query("SELECT *  FROM users where id=?", mapperi);
             return users;
         }
-        public int deleteById(int id) {
-            return jdbc.update("DELETE * FROM users WHERE id=?",
-                    new Object[] { id });
+        public int deleteByName(String name) {
+            return jdbc.update("DELETE * FROM users WHERE name=?",
+                    new Object[] { name });
         }
 
-        public int lisaa(Users users) {
+        public int lisaapa(Users users) {
             return jdbc.update("insert into users(name, email, username, password) " + "values(?, ?, ?, ?)",
                     new Object[] { users.getName(), users.getEmail(), users.getUsername(), users.getPassword() });
         }

@@ -2,20 +2,20 @@ package fi.academy.oauthkokeilu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/messages")
 @CrossOrigin("*")
 public class ForumController {
     private ViestiDAO dao;
+    private KayttajaDAO dak;
 
     @Autowired
-    public ForumController(ViestiDAO dao) {
+    public ForumController(ViestiDAO dao, KayttajaDAO dak) {
         this.dao = dao;
+        this.dak = dak;
     }
 
     @GetMapping("/messages")
@@ -38,12 +38,25 @@ public class ForumController {
         dao.lisaa(label);
         return ResponseEntity.created(new URI("/messages")).build();
     }
-//    @PostMapping("/messages")
-//    public ResponseEntity<?>lisaa(@RequestBody Messages messages) {
-//        dao.lisaa(messages);
-//        String url = "http://localhost:8080/messages/" + messages.getLabel();
-//        return ResponseEntity.created(URI.create(url)).build();
-//    }
+    @GetMapping("/users")
+    public List<Users> kaikkiKayttajat(
+            @RequestParam(name = "filtteri", required = false) String name) {
+        if (name == null) {
+            List kayttajat = dak.haeKaikkiKayttajat();
+            return kayttajat;
+        }
+        return dak.haeKaikkiKayttajat();
+    }
 
+    @DeleteMapping("/{name}")
+    public ResponseEntity<?> deleteById(@PathVariable(name = "name")String name){
+        dak.deleteByName(name);
+        return ResponseEntity.noContent().build();
+    }
+    @PostMapping("/users")
+    public ResponseEntity<?>lisaapa(@RequestBody Users username) throws URISyntaxException {
+        dak.lisaapa(username);
+        return ResponseEntity.created(new URI("/users")).build();
+    }
 }
 
