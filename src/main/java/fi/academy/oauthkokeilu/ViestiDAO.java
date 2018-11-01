@@ -32,8 +32,8 @@ public class ViestiDAO {
         List<Messages> messages = jdbc.query("SELECT * FROM messages", mapperi);
         return messages;
     }
-    public List<Messages> jokuViesti() {
-        List<Messages> messages = jdbc.query("SELECT *  FROM messages where id=?", mapperi);
+    public List<Messages> haeKayttajanViestit() {
+        List<Messages> messages = jdbc.query("SELECT *  FROM messages where userid=?", mapperi);
         return messages;
 }
     public int deleteById(int id) {

@@ -2,6 +2,8 @@ package fi.academy.oauthkokeilu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -28,18 +30,6 @@ public class ForumController {
         return dao.haeKaikkiViestit();
     }
 
-
-
-    @GetMapping("/{username}")
-    public List<Users> haeKayttajaNimi(
-            @RequestParam(name = "filtteri", required = false) String username) {
-        if (username == null) {
-            List usernameYksi = dak.haeKayttajaNimi();
-            return usernameYksi;
-        }
-        return dak.haeKayttajaNimi();
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id")Integer id){
         dao.deleteById(id);
@@ -53,13 +43,19 @@ public class ForumController {
     @GetMapping("/users")
     public List<Users> kaikkiKayttajat(
             @RequestParam(name = "filtteri", required = false) String name) {
-        if (name == null) {
             List kayttajat = dak.haeKaikkiKayttajat();
             return kayttajat;
-        }
-        return dak.haeKaikkiKayttajat();
     }
 
+    @GetMapping("users/{name}")
+    public List<Users> haeKayttajaNimi(
+            @PathVariable(name = "name", required = false) String username) {
+        if (username != null) {
+            List usernameYksi = dak.haeKayttajaNimi(username);
+            return usernameYksi;
+        }
+        return dak.haeKayttajaNimi(username);
+    }
     @DeleteMapping("/{name}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "name")String name){
         dak.deleteByName(name);
@@ -71,4 +67,3 @@ public class ForumController {
         return ResponseEntity.created(new URI("/users")).build();
     }
 }
-
