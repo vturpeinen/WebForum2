@@ -30,6 +30,18 @@ public class ForumController {
         return dao.haeKaikkiViestit();
     }
 
+    @GetMapping("/messages/hae")
+    public List<Messages> kaikkiViestitContentilla(
+            @RequestParam(name = "filtteri", required = false) String content) {
+        if (content == null) {
+            List viestit = dao.haeViesteistaContentilla();
+            return viestit;
+        }
+        return dao.haeViesteistaContentilla();
+    }
+
+
+
     @DeleteMapping("/messages/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id")Integer id){
         dao.deleteById(id);

@@ -36,6 +36,13 @@ public class ViestiDAO {
         List<Messages> messages = jdbc.query("SELECT *  FROM messages where userid=?", mapperi);
         return messages;
 }
+
+    public List<Messages> haeViesteistaContentilla() {
+        List<Messages> messages = jdbc.query("SELECT *  FROM messages WHERE content LIKE '?%'", mapperi);
+        return messages;
+
+    }
+
     public int deleteById(int id) {
         return jdbc.update("DELETE FROM messages WHERE id=?",
         new Object[] { id });
