@@ -50,13 +50,13 @@ public class KayttajaDAO {
     public int lisaapa(Users users) {
         return jdbc.update("insert into users(name, email, username, password) " + "values(?, ?, ?, ?)",
                 new Object[]{users.getName(), users.getEmail(), users.getUsername(), users.getPassword()});
-    }
+//    }
 //
 //    public List<Users> haeKayttajaNimi() {
-//        List<Users> username = jdbc.query("SELECT * FROM users WHERE username=?", mapperi);
+//        List<Users> username = jdbc.query("SELECT * FROM users WHERE username=?(SELECT userid FROM messages)", mapperi);
 //        return username;
-//    }
-//(SELECT userid FROM messages)
+    }
+
     public List<Users> haeKayttajaId() {
         List<Users> id = jdbc.query("SELECT id FROM users WHERE username=?", mapperi);
         return id;

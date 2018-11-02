@@ -30,7 +30,7 @@ public class ForumController {
         return dao.haeKaikkiViestit();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/messages/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id")Integer id){
         dao.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -66,4 +66,14 @@ public class ForumController {
         dak.lisaapa(username);
         return ResponseEntity.created(new URI("/users")).build();
     }
-}
+//    @GetMapping("users/{name}")
+//    public List<Users> haeViesti(
+//            @PathVariable(name = "name", required = false) String username) {
+//        if (username != null) {
+//            List usernameYksi = dak.haeKayttajaNimi(username);
+//            return usernameYksi;
+//        }
+//        return dak.haeKayttajaNimi(username);
+    }
+
+

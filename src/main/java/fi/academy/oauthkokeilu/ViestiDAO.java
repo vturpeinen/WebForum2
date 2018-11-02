@@ -14,12 +14,12 @@ public class ViestiDAO {
     private RowMapper<Messages> mapperi = (ResultSet rs, int indeksi) -> {
         Messages messages = new Messages(
 
-                rs.getString("content"),
                 rs.getString("label"),
+                rs.getString("content"),
                 rs.getInt("id"),
                 rs.getDate("ttimestamp"),
-                rs.getString("ggroup"),
-                rs.getInt("userid"));
+                rs.getString("ggroup"));
+//                rs.getInt("userid"));
 
 
         return messages;
@@ -42,8 +42,8 @@ public class ViestiDAO {
     }
 
     public int lisaa(Messages messages) {
-        return jdbc.update("INSERT INTO messages(label, content, ttimestamp, ggroup) VALUES (?,?,?,?)",
-                new Object[] { messages.getLabel(), messages.getContent(), messages.getTtimestamp(), messages.getGgroup() });
+        return jdbc.update("INSERT INTO messages(content,label, ttimestamp, ggroup) VALUES (?,?,?,?)",
+                new Object[] {messages.getContent(),messages.getLabel(), messages.getTtimestamp(), messages.getGgroup() });
     }
 
 }
